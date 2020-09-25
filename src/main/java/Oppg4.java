@@ -14,7 +14,7 @@ public class Oppg4 {
         Person[] people = readPeopleFromFile(System.getProperty("user.dir") + "/names");
 
         // Create
-        MyHashTable<Person> table = new MyHashTable<>(people.length);
+        MyHashTable<Person> table = new MyHashTable<>();
         for (Person person : people) table.add(person);
         Optional<Person> joakim = table.search("Langvand, Joakim Skogø");
         Optional<Person> stine = table.search("Reppe, Stine");
@@ -168,11 +168,7 @@ class MyHashTable<T> {
         int index = genHash(obj);
         table[index].push(obj);
         this.entries++;
-        if (getLoad() > loadFactor) {
-            System.out.println("Entries: " + this.entries + ", Size: " + this.size + ", Load: " + getLoad());
-            rehash();
-            System.out.println("Rehashed");
-        }
+        if (getLoad() > loadFactor) rehash();
     }
 
     /*
@@ -194,7 +190,7 @@ class MyHashTable<T> {
      */
     private void rehash() {
         int oldSize = this.size;
-        this.size = nextPrime((int)(this.entries * 1.4));
+        this.size = nextPrime((int)(this.entries * 1.5));
         LinkedList<T> newTable[] =
             (LinkedList<T>[])java.lang.reflect.Array.newInstance(LinkedList.class, this.size);
         for (int i = 0; i < this.size; i++) newTable[i] = new LinkedList<T>();
@@ -206,16 +202,20 @@ class MyHashTable<T> {
         this.table = newTable;
     }
 
+    /*
+      Characters are weighted by position. This could probably be improved.
+     */
     private int genHash(Object obj) {
         String str = obj.toString();
         int hash = 0;
-        for (int i = 0; i < str.length(); i++) {
-            hash += (i + 1) * (int)str.charAt(i);
-        }
+        for (int i = 0; i < str.length(); hash += (int)str.charAt(i) * ++i);
         return hash % this.size;
     }
 }
 
+/*
+  How to implement a linked list in five minutes. Let's come back to this to improve it..
+ */
 class LinkedList<T> {
     private Node<T> first;
 
