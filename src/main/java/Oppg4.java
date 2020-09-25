@@ -10,6 +10,8 @@ import java.util.Scanner;
 public class Oppg4 {
     public static void main(String... args) {
 
+        printHeader("Assignment 1:\nCreate Hashtable, populate it with names from a file");
+
         // Create hashtable
         MyHashTable<Person> table = new MyHashTable<>();
 
@@ -25,6 +27,29 @@ public class Oppg4 {
         // Print the table
         System.out.println("\n" + table);
         System.out.println("\nTable load (entries/size): " + table.getLoad());
+    }
+
+    static void printHeader(String str) {
+        int cols = 80;
+        String lines[] = str.split("\n");
+        for (int i = 0; i < 80; i++) System.out.print("*");
+        for (String line : lines) {
+            int len = line.length();
+            System.out.print("\n*");
+            //for (int i = 1; i < (cols / 2) - (len / 2); i++) System.out.print(" ");
+            printNTimes(" ", (cols / 2) - (len / 2));
+            System.out.print(line);
+            //for (int i = (cols / 2) + (len / 2) + (len % 2); i < cols - 1; i++) System.out.print(" ");
+            printNTimes(" ", (cols / 2) - (len / 2) - (len % 2) - 2);
+            System.out.print("*");
+        }
+        System.out.println();
+        for (int i = 0; i < 80; i++) System.out.print("*");
+        System.out.println();
+    }
+
+    static void printNTimes(String str, int n) {
+        for (int i = 0; i < n; i++) System.out.print(str);
     }
 
     /*
@@ -114,7 +139,7 @@ class MyHashTable<T> {
     MyHashTable() {
         this.size = 13;
         this.entries = 0;
-        this.loadFactor = 0.8f;
+        this.loadFactor = 0.95f;
         this.table = (LinkedList<T>[])java.lang.reflect.Array.newInstance(LinkedList.class, this.size);
         for (int i = 0; i < this.size; i++) table[i] = new LinkedList<T>();
     }
@@ -191,8 +216,8 @@ class MyHashTable<T> {
      */
     private void rehash() {
         int oldSize = this.size;
-        // Increase the table by ~50%
-        this.size = nextPrime((int)(this.entries * 1.5));
+        // Increase the table by ~35%
+        this.size = nextPrime((int)(this.entries * 1.35));
         LinkedList<T> newTable[] =
             (LinkedList<T>[])java.lang.reflect.Array.newInstance(LinkedList.class, this.size);
         for (int i = 0; i < this.size; newTable[i++] = new LinkedList<T>());
