@@ -10,20 +10,21 @@ import java.util.Scanner;
 public class Oppg4 {
     public static void main(String... args) {
 
-        // Read file into array
-        Person[] people = readPeopleFromFile(System.getProperty("user.dir") + "/names");
-
-        // Create
+        // Create hashtable
         MyHashTable<Person> table = new MyHashTable<>();
+
+        // Read file into array and populate table
+        Person[] people = readPeopleFromFile(System.getProperty("user.dir") + "/names");
         for (Person person : people) table.add(person);
+
+        // Tests: Joakim should be present in the table, Svlad is made up
         Optional<Person> joakim = table.search("Langvand, Joakim Skogø");
-        Optional<Person> stine = table.search("Reppe, Stine");
-        joakim.isPresent();
-        stine.toString();
-        System.out.println("Joakim is " + (joakim.isPresent() ? "present" : "not found"));
-        System.out.println("Stine is " + (stine.isPresent() ? "present" : "not found"));
-        System.out.println("HashTable load: " + table.getLoad());
-        System.out.println(table.toString());
+        Optional<Person> svlad = table.search("Cjelli, Svlad");
+        System.out.println("\nSearch tests " + (joakim.isPresent() && !svlad.isPresent() ? "OK" : "FAILED"));
+
+        // Print the table
+        System.out.println("\n" + table);
+        System.out.println("\nTable load (entries/size): " + table.getLoad());
     }
 
     /*
@@ -190,10 +191,11 @@ class MyHashTable<T> {
      */
     private void rehash() {
         int oldSize = this.size;
+        // Increase the table by ~50%
         this.size = nextPrime((int)(this.entries * 1.5));
         LinkedList<T> newTable[] =
             (LinkedList<T>[])java.lang.reflect.Array.newInstance(LinkedList.class, this.size);
-        for (int i = 0; i < this.size; i++) newTable[i] = new LinkedList<T>();
+        for (int i = 0; i < this.size; newTable[i++] = new LinkedList<T>());
         for (int i = 0; i < oldSize; i++)
             for (int j = 0; j < table[i].getSize(); j++) {
                 T obj = table[i].get(j);
