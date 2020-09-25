@@ -77,8 +77,8 @@ public class Oppg4 {
             Scanner scanner = new Scanner(names);
             int index = 0;
             while (scanner.hasNextLine()) {
-                String data = scanner.nextLine();
-                people[index++] = new Person(data.split(",")[0], data.split(",")[1]);
+                String data[] = scanner.nextLine().split(",");
+                people[index++] = new Person(data[0], data[1]);
             }
             return people;
         } catch (FileNotFoundException e) {
