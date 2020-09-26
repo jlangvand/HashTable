@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Oppg4 {
@@ -27,6 +28,13 @@ public class Oppg4 {
         // Print the table
         System.out.println("\n" + table);
         System.out.println("\nTable load (entries/size): " + table.getLoad());
+    }
+
+    static int[] getRandomIntArray(int size, int bound) {
+        Random rand = new Random();
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) array[i] = rand.nextInt(bound);
+        return array;
     }
 
     static void printHeader(String str) {
