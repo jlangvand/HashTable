@@ -30,6 +30,9 @@ public class Oppg4 {
         System.out.println("\nTable load (entries/size): " + table.getLoad());
     }
 
+    /*
+      Generate table of size 'size' populated by random ints in range [0, bound>
+     */
     static int[] getRandomIntArray(int size, int bound) {
         Random rand = new Random();
         int[] array = new int[size];
