@@ -11,7 +11,15 @@ import java.util.Scanner;
 public class Oppg4 {
     public static void main(String... args) {
 
-        printHeader("Assignment 1:\nCreate Hashtable, populate it with names from a file");
+        //assignment1();
+
+        Assignment2 assignment2 = new Assignment2();
+        assignment2.setup();
+
+    }
+
+    static void assignment1() {
+        SharedUtils.printHeader("Assignment 1:\nCreate Hashtable, populate it with names from a file");
 
         // Create hashtable
         MyHashTable<Person> table = new MyHashTable<>();
@@ -28,39 +36,6 @@ public class Oppg4 {
         // Print the table
         System.out.println("\n" + table);
         System.out.println("\nTable load (entries/size): " + table.getLoad());
-    }
-
-    /*
-      Generate table of size 'size' populated by random ints in range [0, bound>
-     */
-    static int[] getRandomIntArray(int size, int bound) {
-        Random rand = new Random();
-        int[] array = new int[size];
-        for (int i = 0; i < size; i++) array[i] = rand.nextInt(bound);
-        return array;
-    }
-
-    static void printHeader(String str) {
-        int cols = 80;
-        String lines[] = str.split("\n");
-        for (int i = 0; i < 80; i++) System.out.print("*");
-        for (String line : lines) {
-            int len = line.length();
-            System.out.print("\n*");
-            //for (int i = 1; i < (cols / 2) - (len / 2); i++) System.out.print(" ");
-            printNTimes(" ", (cols / 2) - (len / 2));
-            System.out.print(line);
-            //for (int i = (cols / 2) + (len / 2) + (len % 2); i < cols - 1; i++) System.out.print(" ");
-            printNTimes(" ", (cols / 2) - (len / 2) - (len % 2) - 2);
-            System.out.print("*");
-        }
-        System.out.println();
-        for (int i = 0; i < 80; i++) System.out.print("*");
-        System.out.println();
-    }
-
-    static void printNTimes(String str, int n) {
-        for (int i = 0; i < n; i++) System.out.print(str);
     }
 
     /*
@@ -123,6 +98,64 @@ public class Oppg4 {
             e.printStackTrace();
         }
         return null;
+    }
+}
+
+class Assignment2 {
+    private int[] intArray;
+    private MyHashTable<Integer> hashtable;
+    private boolean ready;
+
+    Assignment2() {
+        this.ready = false;
+        SharedUtils.printHeader("Assignment 2:\nPopulate hashtable with 10M ints and measure perf.");
+    }
+
+    public boolean setup() {
+        return true;
+    }
+
+    public boolean run() {
+        if (!ready) {
+            System.out.println("Run setup first");
+            return false;
+        }
+        return true;
+    }
+
+    /*
+      Generate table of size 'size' populated by random ints in range [0, bound>
+    */
+    private static int[] getRandomIntArray(int size, int bound) {
+        Random rand = new Random();
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) array[i] = rand.nextInt(bound);
+        return array;
+    }
+}
+
+class SharedUtils {
+    public static void printHeader(String str) {
+        int cols = 80;
+        String lines[] = str.split("\n");
+        for (int i = 0; i < 80; i++) System.out.print("*");
+        for (String line : lines) {
+            int len = line.length();
+            System.out.print("\n*");
+            //for (int i = 1; i < (cols / 2) - (len / 2); i++) System.out.print(" ");
+            printNTimes(" ", (cols / 2) - (len / 2));
+            System.out.print(line);
+            //for (int i = (cols / 2) + (len / 2) + (len % 2); i < cols - 1; i++) System.out.print(" ");
+            printNTimes(" ", (cols / 2) - (len / 2) - (len % 2) - 2);
+            System.out.print("*");
+        }
+        System.out.println();
+        for (int i = 0; i < 80; i++) System.out.print("*");
+        System.out.println();
+    }
+
+    static void printNTimes(String str, int n) {
+        for (int i = 0; i < n; i++) System.out.print(str);
     }
 }
 
