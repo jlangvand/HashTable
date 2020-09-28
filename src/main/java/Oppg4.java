@@ -15,20 +15,25 @@ public class Oppg4 {
 
         SharedUtils.printDebug = false;
 
-        assignment1();
+        Assignment1 assignment1 = new Assignment1();
+        assignment1.run();
 
-        Assignment2 assignment2 = new Assignment2();
-        assignment2.setup((int)1e7, (int)1e9);
+        Assignment2 assignment2 = new Assignment2((int)1e7, (int)1e9);
         assignment2.run();
 
     }
+}
 
-    static void assignment1() {
+class Assignment1 {
+    private MyHashTable<Person> table;
+    private Person[] people;
+
+    Assignment1() {
         SharedUtils.printHeader("Assignment 1:\nCreate Hashtable, populate it with names from a file");
+        this.table = new MyHashTable<>();
+    }
 
-        // Create hashtable
-        MyHashTable<Person> table = new MyHashTable<>();
-
+    void run() {
         // Read file into array and populate table
         Person[] people = readPeopleFromFile(System.getProperty("user.dir") + "/names");
         for (Person person : people) table.add(person);
@@ -43,52 +48,9 @@ public class Oppg4 {
         System.out.println("\nTable load (entries/size): " + table.getLoad());
     }
 
-    /*
-      The following method is written by @martinus
-      https://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java
-    */
-    static int countLinesNew(String filename) throws IOException {
-        InputStream is = new BufferedInputStream(new FileInputStream(filename));
+    private static Person[] readPeopleFromFile(String filename) {
         try {
-            byte[] c = new byte[1024];
-
-            int readChars = is.read(c);
-            if (readChars == -1) {
-                // bail out if nothing to read
-                return 0;
-            }
-
-            // make it easy for the optimizer to tune this loop
-            int count = 0;
-            while (readChars == 1024) {
-                for (int i=0; i<1024;) {
-                    if (c[i++] == '\n') {
-                        ++count;
-                    }
-                }
-                readChars = is.read(c);
-            }
-
-            // count remaining characters
-            while (readChars != -1) {
-                for (int i=0; i<readChars; ++i) {
-                    if (c[i] == '\n') {
-                        ++count;
-                    }
-                }
-                readChars = is.read(c);
-            }
-
-            return count == 0 ? 1 : count;
-        } finally {
-            is.close();
-        }
-    }
-
-
-    static Person[] readPeopleFromFile(String filename) {
-        try {
-            Person[] people = new Person[countLinesNew(filename)];
+            Person[] people = new Person[SharedUtils.countLinesInFile(filename)];
             File names = new File(filename);
             Scanner scanner = new Scanner(names);
             int index = 0;
@@ -112,10 +74,11 @@ class Assignment2 {
     private boolean ready;
     private SimpleTimer timer;
 
-    Assignment2() {
+    Assignment2(int size, int bound) {
         timer = new SimpleTimer();
         this.ready = false;
         SharedUtils.printHeader("Assignment 2:\nPopulate hashtable with 10M ints and measure perf.");
+        this.setup(size, bound);
     }
 
     /*
@@ -231,6 +194,48 @@ class SharedUtils {
 
     static void print(String str) {
         System.out.println(str);
+    }
+
+    /*
+      The following method is written by @martinus
+      https://stackoverflow.com/questions/453018/number-of-lines-in-a-file-in-java
+    */
+    static int countLinesInFile(String filename) throws IOException {
+        InputStream is = new BufferedInputStream(new FileInputStream(filename));
+        try {
+            byte[] c = new byte[1024];
+
+            int readChars = is.read(c);
+            if (readChars == -1) {
+                // bail out if nothing to read
+                return 0;
+            }
+
+            // make it easy for the optimizer to tune this loop
+            int count = 0;
+            while (readChars == 1024) {
+                for (int i=0; i<1024;) {
+                    if (c[i++] == '\n') {
+                        ++count;
+                    }
+                }
+                readChars = is.read(c);
+            }
+
+            // count remaining characters
+            while (readChars != -1) {
+                for (int i=0; i<readChars; ++i) {
+                    if (c[i] == '\n') {
+                        ++count;
+                    }
+                }
+                readChars = is.read(c);
+            }
+
+            return count == 0 ? 1 : count;
+        } finally {
+            is.close();
+        }
     }
 }
 
