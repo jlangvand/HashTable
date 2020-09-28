@@ -25,7 +25,7 @@ public class Oppg4 {
 }
 
 class Assignment1 {
-    private MyHashTable<Person> table;
+    private MyHashTable<String, Person> table;
     private Person[] people;
 
     Assignment1() {
@@ -36,7 +36,7 @@ class Assignment1 {
     void run() {
         // Read file into array and populate table
         Person[] people = readPeopleFromFile(System.getProperty("user.dir") + "/names");
-        for (Person person : people) table.add(person);
+        for (Person person : people) table.add(person.toString(), person);
 
         // Tests: Joakim should be present in the table, Svlad is made up and should fail
         Optional<Person> joakim = table.search("Langvand, Joakim Skogø");
@@ -70,7 +70,7 @@ class Assignment1 {
 
 class Assignment2 {
     private int[] intArray;
-    private MyHashTable<Integer> hashtable;
+    private MyHashTable<Integer, String> hashtable;
     private boolean ready;
     private SimpleTimer timer;
 
@@ -96,7 +96,7 @@ class Assignment2 {
       Default parameters
     */
     public void setup() {
-        this.setup((int)10e8, (int)10e7);
+        this.setup((int)1e7, (int)1e10);
     }
 
     public boolean run() {
@@ -108,7 +108,7 @@ class Assignment2 {
         boolean status = true;
 
         this.timer.start();
-        for (int i = 0; i < intArray.length; hashtable.add(intArray[i++]));
+        for (int i = 0; i < intArray.length; hashtable.add(intArray[i++], ""));
         double duration = this.timer.stop();
 
         java.util.HashMap hashmap = new java.util.HashMap();
@@ -253,12 +253,12 @@ class Person {
     }
 }
 
-class MyHashTable<T> {
+class MyHashTable<K, V> {
     private int size;
     private int entries;
     private int collisions;
     private double loadFactor;
-    private LinkedList<T>[] table;
+    private LinkedList<V>[] table;
     private int rehashes;
 
     public static int defaultSize = 51;
@@ -277,8 +277,8 @@ class MyHashTable<T> {
         this.entries = 0;
         this.loadFactor = loadFactor;
         this.rehashes = 0;
-        this.table = (LinkedList<T>[])java.lang.reflect.Array.newInstance(LinkedList.class, this.size);
-        for (int i = 0; i < this.size; i++) table[i] = new LinkedList<T>();
+        this.table = (LinkedList<V>[])java.lang.reflect.Array.newInstance(LinkedList.class, this.size);
+        for (int i = 0; i < this.size; i++) table[i] = new LinkedList<V>();
     }
 
     /*
@@ -298,11 +298,11 @@ class MyHashTable<T> {
     /*
       Search for an object in the table. Returns the object if present.
     */
-    public Optional<T> search(String cmp) {
+    public Optional<V> search(String cmp) {
         int index = genHash(cmp);
-        Optional<T> ret = Optional.empty();
+        Optional<V> ret = Optional.empty();
         for (int i = 0; i < this.table[index].getSize(); i++) {
-            T obj = this.table[index].get(i);
+            V obj = this.table[index].get(i);
             if (obj.toString().equals(cmp.toString())) return ret.of(obj);
         }
         return ret;
@@ -341,8 +341,8 @@ class MyHashTable<T> {
 
       Before returning, we'll check if the load exceeds the load factor and rehash if necessary.
     */
-    public void add(T obj) {
-        int index = genHash(obj);
+    public void add(K key, V obj) {
+        int index = genHash(key);
         table[index].push(obj);
         this.entries++;
         if (getLoad() > loadFactor) rehash();
@@ -369,12 +369,12 @@ class MyHashTable<T> {
         int oldSize = this.size;
         // Increase the table by ~35%
         this.size = nextPrime((int)(this.entries * 1.35));
-        LinkedList<T> newTable[] =
-            (LinkedList<T>[])java.lang.reflect.Array.newInstance(LinkedList.class, this.size);
-        for (int i = 0; i < this.size; newTable[i++] = new LinkedList<T>());
+        LinkedList<V> newTable[] =
+            (LinkedList<V>[])java.lang.reflect.Array.newInstance(LinkedList.class, this.size);
+        for (int i = 0; i < this.size; newTable[i++] = new LinkedList<V>());
         for (int i = 0; i < oldSize; i++)
             for (int j = 0; j < table[i].getSize(); j++) {
-                T obj = table[i].get(j);
+                V obj = table[i].get(j);
                 newTable[genHash(obj)].push(obj);
             }
         this.table = newTable;
