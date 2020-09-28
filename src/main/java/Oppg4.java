@@ -114,7 +114,7 @@ class Assignment2 {
         java.util.HashMap hashmap = new java.util.HashMap();
 
         this.timer.start();
-        for (int i = 0; i < intArray.length; hashmap.put(null, intArray[i++]));
+        for (int i = 0; i < intArray.length; hashmap.put(intArray[i++], ""));
         double duration2 = this.timer.stop();
 
         SharedUtils.print("Length of array: " + intArray.length, true);
@@ -298,8 +298,8 @@ class MyHashTable<K, V> {
     /*
       Search for an object in the table. Returns the object if present.
     */
-    public Optional<V> search(String cmp) {
-        int index = genHash(cmp);
+    public <K> Optional<V> search(K cmp) {
+        int index = calculateIndex(cmp, this.size);
         Optional<V> ret = Optional.empty();
         for (int i = 0; i < this.table[index].getSize(); i++) {
             V obj = this.table[index].get(i);
@@ -342,7 +342,7 @@ class MyHashTable<K, V> {
       Before returning, we'll check if the load exceeds the load factor and rehash if necessary.
     */
     public void add(K key, V obj) {
-        int index = genHash(key);
+        int index = calculateIndex(key, size);
         table[index].push(obj);
         this.entries++;
         if (getLoad() > loadFactor) rehash();
@@ -375,32 +375,25 @@ class MyHashTable<K, V> {
         for (int i = 0; i < oldSize; i++)
             for (int j = 0; j < table[i].getSize(); j++) {
                 V obj = table[i].get(j);
-                newTable[genHash(obj)].push(obj);
+                newTable[calculateIndex(obj, size)].push(obj);
             }
         this.table = newTable;
         this.rehashes++;
     }
 
-    private int genHash(Object obj) {
-        String str = obj.toString();
-        int hash = 0;
+    public int calculateIndex(K key) {
+        return calculateIndex(key, this.size);
+    }
 
-        // If the object is a Number, treat it as an int.
-        // This would not perform good on floats..
-        if (obj instanceof java.lang.Number) {
-            // Hashing method by @Thomas Mueller
-            // https://stackoverflow.com/questions/664014/what-integer-hash-function-are-good-that-accepts-an-integer-hash-key
-            hash = Integer.parseInt(str);
-            hash = ((hash >>> 16) ^ hash) * 0x45d9f3b;
-            hash = ((hash >>> 16) ^ hash) * 0x45d9f3b;
-            hash = (hash >>> 16) ^ hash;
+    static <K> int calculateIndex(K key, int size) {
+        int hash = 0;
+        if (key instanceof Number) {
+            hash = Integer.parseInt(key.toString()); // Dirty tricks;
         } else {
-            // This should do for strings.
-            // Chars are weighted by position, so 'foo' and 'oof' produce unique hashes.
+            String str = key.toString();
             for (int i = 0; i < str.length(); hash += (int)str.charAt(i++) + i);
         }
-
-        return (hash > 0 ? hash : - hash) % this.size;
+        return hash % size;
     }
 }
 
