@@ -1,0 +1,148 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+
+> Task :run
+********************************************************************************
+*                                  Assignment 1:                               *
+*              Create Hashtable, populate it with names from a file            *
+********************************************************************************
+
+Search tests OK
+
+Contents of hashtable. Asterisk indicates collision.
+ Index    Count     Value(s)
+ 0        0         
+ 1        0         
+ 2        1         {Eggen, Morten Stavik} 
+ 3        0         
+ 4        0         
+*5        2         {Berge, Andrea Marie Ramberg} {Sletta, Erling Sung} 
+ 6        0         
+ 7        1         {Langvand, Joakim Skogø} 
+ 8        1         {Aagaard, Herman Tolpinrud} 
+ 9        1         {Aune, Jostein Johansen} 
+*10       2         {Luu, Tommy Duc} {Ødelien, Viljar Svare} 
+*11       2         {Selvåg, Stian Valbekmo} {Elton, Hermann Owren} 
+ 12       1         {Jansrud, Nora Evensen} 
+ 13       0         
+ 14       0         
+ 15       0         
+ 16       0         
+*17       2         {Øvstedal, Torstein} {Østby, Lars Brodin} 
+ 18       0         
+ 19       0         
+ 20       1         {Sonen, Scott Rydberg} 
+ 21       0         
+ 22       0         
+ 23       0         
+ 24       0         
+ 25       0         
+ 26       1         {Vold, Robin Christoffer} 
+ 27       1         {Sygard, Magnus Øvre} 
+ 28       1         {Panasewicz, Michal Robert} 
+ 29       0         
+ 30       0         
+ 31       0         
+*32       2         {Selsøyvold, Jørgen} {Vetter, Simon Dreyer} 
+*33       2         {Tran, Thomas Thien Dinh} {Øverås, Torbjørn} 
+ 34       0         
+ 35       0         
+ 36       0         
+ 37       1         {Hustad, Jesper Forrest} 
+ 38       0         
+ 39       1         {Hermanrud, Anders Normann} 
+ 40       0         
+ 41       0         
+ 42       0         
+ 43       1         {Lundegaard, Mads} 
+ 44       0         
+ 45       0         
+ 46       0         
+ 47       0         
+ 48       0         
+ 49       1         {Hadzalic, Endré} 
+ 50       0         
+ 51       0         
+ 52       0         
+ 53       0         
+ 54       1         {Kramer, Diderik} 
+ 55       0         
+ 56       1         {Strøm, Sindre August} 
+ 57       0         
+*58       2         {Bredeli, Magnus} {Rosendahl, Olaf} 
+ 59       1         {Schiøll-Johansen, Nicolay} 
+ 60       0         
+ 61       0         
+ 62       0         
+ 63       0         
+ 64       0         
+*65       2         {Olsen, Mats Erik Tuhus} {Hovind, Ingebrigt Kristoffer Thomassen} 
+ 66       1         {Mikkelsen, Ellen} 
+*67       2         {Blindheimsvik, Jenny Farstad} {Bugge-Hundere, Mathilde Kvam} 
+ 68       0         
+ 69       0         
+ 70       1         {Bauer, Linn Camilla} 
+ 71       0         
+ 72       0         
+ 73       1         {Steira, Eirik} 
+ 74       1         {Amundsen, Oline} 
+*75       2         {Trosdahl, Ida Heggen} {Nordahl, Magnus} 
+ 76       0         
+ 77       0         
+ 78       0         
+ 79       0         
+ 80       1         {Dragesund, Iben Lind} 
+*81       2         {Lindberg, Peder Johan} {Grønning, Lea} 
+ 82       0         
+ 83       1         {Eide, Mats Sollid} 
+*84       3         {Podliashanyk, Ilona} {Kvarving, Odin} {Stephensen, Truls Kolstad} 
+ 85       1         {Kirkbakk, Arvid Jr} 
+*86       4         {Mortensen, Kamilla} {Bakke, Torbjørn} {Myrold, Mathias} {Jensen, Simon} 
+ 87       0         
+ 88       1         {Tysland, Håvard} 
+ 89       0         
+*90       2         {Bråten, Lars-Håvard Holter} {Løkken, Ole} 
+*91       2         {Grosås, Mai Helene} {Hagen, Martin Slind} 
+ 92       0         
+ 93       1         {Stjernen, Lukas Øystein Normann} 
+ 94       1         {Pettersen, Sander} 
+ 95       1         {Hansen, Chloe Kumari} 
+ 96       0         
+ 97       0         
+*98       2         {Martinez, Sergio} {Granaas, Sigmund Ole} 
+ 99       1         {Rygh, Stine} 
+ 100      0         
+*101      3         {Winther, Hogne Heggdal} {Fiborg, Matilde Volle} {Larsen, Linda Katrine} 
+*102      3         {Fyhn, Håvard Holm} {Haugen, Erik Kaasbøll} {Mogen, Stian Fjæran} 
+ 103      1         {Solvoll, Kenneth} 
+ 104      0         
+*105      2         {Seip, Georg Vilhelm} {Huru, Thomas} 
+*106      2         {Bliudzius, Rokas} {Haugberg, Henrik Latsch} 
+ 107      0         
+ 108      1         {Hoff, Ola Kristoffer} 
+ 109      0         
+ 110      0         
+ 111      1         {Forbrigd, Hans William} 
+ 112      0         
+*113      2         {Labrador, Karl Klykken} {Marklund, Olof André} 
+ 114      0         
+ 115      0         
+*116      2         {Loe, Jens Mjønes} {Shawish, Mahmoud Hasan} 
+ 117      0         
+*118      4         {Eggen, Mattias Agentoft} {Berger-Nilsen, Eivind} {Julsen, Fredrik Holm} {Hafsø, Henrik Tengs} 
+*119      2         {Bjøru, Niklas Johan} {Henriksen, Øyvind} 
+ 120      0         
+
+Table load (entries/size): 0.7107438016528925
+********************************************************************************
+*                                  Assignment 2:                               *
+*               Populate hashtable with 10M ints and measure perf.             *
+********************************************************************************
+Setup complete in 1.9329999999999998s
+Custom hashtable: 5.669s
+Java hashtable: 3.3449999999999998s
+Collisions: 2955082 (~29%), Load: ~0.74 (~26% overhead) Rehashes: 0
+
+BUILD SUCCESSFUL in 11s
+2 actionable tasks: 1 executed, 1 up-to-date
